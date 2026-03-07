@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmoEncode - Permanent, Browser-Based QR Codes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Pure Black & White Configuration */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Brutalist utility classes */
+        .bw-border {
+            border: 2px solid var(--text-color);
+        }
+        
+        .bw-border-b {
+            border-bottom: 2px solid var(--text-color);
+        }
+
+        .bw-hover {
+            transition: all 0.2s ease;
+        }
+        
+        .bw-hover:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .bw-hover-invert {
+            transition: all 0.2s ease;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+        
+        .bw-hover-invert:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Custom Scrollbar for Pre blocks */
+        pre::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        pre::-webkit-scrollbar-track {
+            background: #000;
+            border-top: 2px solid #fff;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background: #fff;
+        }
+        
+        .qr-pattern {
+            background-image: radial-gradient(#ffffff 2px, transparent 2px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-white selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="bw-border-b sticky top-0 bg-black z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold font-mono text-xl">
+                        C
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight">CosmoEncode</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 font-mono text-sm">
+                        <a href="#features" class="hover:underline underline-offset-4">Features</a>
+                        <a href="#architecture" class="hover:underline underline-offset-4">Architecture</a>
+                        <a href="#customization" class="hover:underline underline-offset-4">Customization</a>
+                        <a href="https://bhuvanesh-m-dev.github.io/cosmoencode" target="_blank" class="bw-border px-4 py-2 bw-hover uppercase tracking-wider font-bold">
+                            Open App ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden bw-border-b">
+        <div class="absolute inset-0 qr-pattern"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bw-border px-3 py-1 mb-8 font-mono text-xs uppercase">
+                    <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                    Stateless Architecture
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-6">
+                    Permanent QR Codes. <br />
+                    <span class="font-mono font-normal text-4xl md:text-6xl italic">Zero Dependencies.</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-10 leading-relaxed max-w-2xl font-light">
+                    A lightweight SaaS-style platform to generate, customize, and embed permanent, self-contained QR codes directly in your browser. No external APIs. No expiration.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 font-mono">
+                    <a href="https://bhuvanesh-m-dev.github.io/cosmoencode" target="_blank" class="bw-border bw-hover-invert px-8 py-4 text-center font-bold uppercase tracking-widest text-lg flex items-center justify-center gap-2">
+                        Launch CosmoEncode <i data-lucide="external-link" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#code-example" class="bw-border bw-hover px-8 py-4 text-center font-bold uppercase tracking-widest text-lg">
+                        View Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Vision & Features Grid -->
+    <section id="features" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight">The Vision</h2>
+            <p class="max-w-md font-mono text-sm leading-relaxed border-l-2 border-white pl-4">
+                Providing a simple, reliable, and sustainable QR service. Unlike tools generating temporary links, CosmoEncode produces permanent embeds that remain functional indefinitely.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 bw-border">
+            <!-- Feature 1 -->
+            <div class="p-8 border-b md:border-b-0 md:border-r border-white flex flex-col group bw-hover">
+                <i data-lucide="infinity" class="w-10 h-10 mb-6 group-hover:animate-bounce"></i>
+                <h3 class="text-xl font-bold mb-3">Permanent</h3>
+                <p class="text-sm font-mono opacity-90">Generates as Base64 encoded images. Embedded directly into HTML instead of loaded from servers.</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="p-8 border-b md:border-b-0 lg:border-r border-white flex flex-col group bw-hover">
+                <i data-lucide="wifi-off" class="w-10 h-10 mb-6 group-hover:animate-bounce"></i>
+                <h3 class="text-xl font-bold mb-3">Offline Capable</h3>
+                <p class="text-sm font-mono opacity-90">Fully self-contained and works completely offline. Zero external API calls required to render.</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="p-8 border-b md:border-b-0 md:border-r border-white flex flex-col group bw-hover">
+                <i data-lucide="leaf" class="w-10 h-10 mb-6 group-hover:animate-bounce"></i>
+                <h3 class="text-xl font-bold mb-3">Sustainable</h3>
+                <p class="text-sm font-mono opacity-90">Avoids repetitive server requests. Reduces network traffic and ensures long-term reliability.</p>
+            </div>
+            <!-- Feature 4 -->
+            <div class="p-8 flex flex-col group bw-hover">
+                <i data-lucide="download" class="w-10 h-10 mb-6 group-hover:animate-bounce"></i>
+                <h3 class="text-xl font-bold mb-3">Exportable</h3>
+                <p class="text-sm font-mono opacity-90">Download in PNG for web/print, or SVG for infinite scaling without loss of quality.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture & Workflow -->
+    <section id="architecture" class="bg-white text-black py-20 bw-border-b border-black">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-8">Client-Side Architecture</h2>
+                    <p class="text-lg mb-6 leading-relaxed">
+                        CosmoEncode uses a fully client-side architecture built on HTML5, CSS3, and JavaScript. No backend processing or database storage is required, making it perfect for static hosting environments like GitHub Pages.
+                    </p>
+                    <ul class="font-mono text-sm space-y-4 mb-8">
+                        <li class="flex items-center gap-3"><span class="w-6 h-6 bg-black text-white flex items-center justify-center shrink-0">1</span> User enters URL or text.</li>
+                        <li class="flex items-center gap-3"><span class="w-6 h-6 bg-black text-white flex items-center justify-center shrink-0">2</span> QR is generated locally in the browser.</li>
+                        <li class="flex items-center gap-3"><span class="w-6 h-6 bg-black text-white flex items-center justify-center shrink-0">3</span> Canvas renders the QR image.</li>
+                        <li class="flex items-center gap-3"><span class="w-6 h-6 bg-black text-white flex items-center justify-center shrink-0">4</span> Image converted to Base64 string.</li>
+                        <li class="flex items-center gap-3"><span class="w-6 h-6 bg-black text-white flex items-center justify-center shrink-0">5</span> User downloads or embeds the snippet.</li>
+                    </ul>
+                </div>
+                
+                <div class="border-2 border-black p-8 bg-black text-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                    <h3 class="font-mono text-xl mb-6 flex items-center gap-2 border-b-2 border-white pb-4">
+                        <i data-lucide="cpu" class="w-5 h-5"></i> System Flow
+                    </h3>
+                    <div class="flex flex-col gap-2 font-mono text-sm">
+                        <div class="bw-border p-3 text-center">User Input</div>
+                        <div class="text-center">↓</div>
+                        <div class="bw-border p-3 text-center">QR Gen in Browser</div>
+                        <div class="text-center">↓</div>
+                        <div class="bw-border p-3 text-center">Canvas Rendering</div>
+                        <div class="text-center">↓</div>
+                        <div class="bw-border p-3 text-center">Convert Image to Base64</div>
+                        <div class="text-center">↓</div>
+                        <div class="bw-border p-3 text-center bg-white text-black font-bold">Embed or Download QR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customization Section -->
+    <section id="customization" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">Visual Customization</h2>
+            <p class="text-lg opacity-80 font-mono">
+                Generate visually distinct QR codes while maintaining scanning reliability.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 font-mono">
+            <div class="bw-border p-8">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 font-sans border-b-2 border-white pb-4">
+                    <i data-lucide="grid" class="w-6 h-6"></i> Pattern Styles
+                </h3>
+                <ul class="grid grid-cols-2 gap-4">
+                    <li class="flex items-center gap-2"><div class="w-3 h-3 bg-white"></div> Classic</li>
+                    <li class="flex items-center gap-2"><div class="w-3 h-3 bg-white rounded-full"></div> Bubble</li>
+                    <li class="flex items-center gap-2"><div class="w-3 h-3 bg-white rounded-md"></div> Smooth</li>
+                    <li class="flex items-center gap-2"><div class="w-3 h-3 bg-white rotate-45"></div> Sharp</li>
+                    <li class="flex items-center gap-2"><div class="w-3 h-3 border-2 border-white"></div> Elegant</li>
+                    <li class="flex items-center gap-2"><div class="w-3 h-3 bg-white rounded-full opacity-50"></div> Dots</li>
+                </ul>
+            </div>
+
+            <div class="bw-border p-8">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 font-sans border-b-2 border-white pb-4">
+                    <i data-lucide="target" class="w-6 h-6"></i> Eye Styles (Corners)
+                </h3>
+                <ul class="grid grid-cols-2 gap-4">
+                    <li class="flex items-center gap-2"><div class="w-4 h-4 border-2 border-white flex items-center justify-center"><div class="w-1 h-1 bg-white"></div></div> Classic</li>
+                    <li class="flex items-center gap-2"><div class="w-4 h-4 border-2 border-white rounded-full flex items-center justify-center"><div class="w-1 h-1 bg-white rounded-full"></div></div> Circle</li>
+                    <li class="flex items-center gap-2"><div class="w-4 h-4 border-2 border-white rounded-lg flex items-center justify-center"><div class="w-1.5 h-1.5 bg-white rounded-sm"></div></div> Bubble</li>
+                    <li class="flex items-center gap-2"><div class="w-4 h-4 border-2 border-white rounded-md flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-sm"></div></div> Smooth</li>
+                    <li class="flex items-center gap-2"><div class="w-4 h-4 border border-white flex items-center justify-center"><div class="w-2 h-2 bg-white"></div></div> Elegant</li>
+                    <li class="flex items-center gap-2"><div class="w-4 h-4 border-2 border-white border-dashed flex items-center justify-center"><div class="w-1.5 h-1.5 bg-white"></div></div> Dotted</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code & Embed Section -->
+    <section id="code-example" class="bw-border-y py-20 relative overflow-hidden">
+        <div class="absolute inset-0 qr-pattern"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-8 bg-black inline-block px-4 py-2 bw-border">Embed the Code</h2>
+            <p class="mb-6 font-mono max-w-2xl bg-black inline-block p-2">Because the QR image is embedded using Base64 encoding, the QR code remains permanent and independent of any servers.</p>
+            
+            <div class="bw-border bg-black mt-4">
+                <div class="flex items-center justify-between px-4 py-2 border-b-2 border-white font-mono text-sm">
+                    <span>index.html</span>
+                    <button class="hover:text-gray-400 transition-colors" onclick="alert('Code Copied!')">Copy Code</button>
+                </div>
+                <pre class="p-6 overflow-x-auto text-sm md:text-base"><code class="language-html text-gray-300">&lt;!-- Generated with CosmoEncode --&gt;
+&lt;div style="text-align:center;"&gt;
+  &lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..." 
+       alt="Permanent QR Code" 
+       width="200"&gt;
+  &lt;p style="font-family: monospace;"&gt;Scan to visit&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Improvements -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <h2 class="text-3xl font-bold mb-8 uppercase tracking-widest">Roadmap & Future</h2>
+        <div class="flex flex-wrap justify-center gap-4 font-mono text-sm">
+            <span class="bw-border px-4 py-2">Advanced Style Customization</span>
+            <span class="bw-border px-4 py-2">Logo Embedding</span>
+            <span class="bw-border px-4 py-2">Batch Generation</span>
+            <span class="bw-border px-4 py-2">Improved Export Formats</span>
+            <span class="bw-border px-4 py-2 text-gray-400 border-gray-400">QR Analytics (Optional Backend)</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t-2 border-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-white text-black flex items-center justify-center font-bold font-mono text-xs">C</div>
+                <span class="font-bold text-lg">CosmoEncode</span>
+            </div>
+            
+            <div class="text-center md:text-left font-mono text-sm opacity-80">
+                Created and maintained by <span class="font-bold text-white border-b border-white">Bhuvanesh M</span>. Open project.
+            </div>
+
+            <div class="flex gap-6 font-mono text-sm">
+                <a href="https://bhuvanesh-m-dev.github.io/cosmoencode" target="_blank" class="hover:underline flex items-center gap-1">
+                    Live App <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+                <a href="#" class="hover:underline">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
