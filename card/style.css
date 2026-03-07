@@ -1,0 +1,23 @@
+/* Custom styles for the card */
+.visiting-card {
+    aspect-ratio: 1.75/1;
+    max-width: 480px;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 640px) {
+    .visiting-card {
+        aspect-ratio: auto;
+        min-height: auto;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
