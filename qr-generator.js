@@ -6,6 +6,7 @@
 class QRGenerator {
     constructor() {
         this.qrCode = null;
+        this.container = null;
     }
 
     /**
@@ -14,6 +15,7 @@ class QRGenerator {
      * @param {Object} config - The configuration object for the QR code.
      */
     init(container, config) {
+        this.container = container;
         // Default options combined with provided config
         const finalConfig = {
             type: "canvas",
@@ -37,5 +39,11 @@ class QRGenerator {
 
     download(name, extension) {
         if (this.qrCode) this.qrCode.download({ name, extension });
+    }
+
+    getDataUrl() {
+        if (!this.container) return null;
+        const canvas = this.container.querySelector('canvas');
+        return canvas ? canvas.toDataURL() : null;
     }
 }
