@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmoTools - Fast, Privacy-First Browser Utilities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Pure Black & White Configuration */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Brutalist utility classes */
+        .bw-border {
+            border: 2px solid var(--text-color);
+        }
+        
+        .bw-border-b {
+            border-bottom: 2px solid var(--text-color);
+        }
+
+        .bw-hover {
+            transition: all 0.2s ease;
+        }
+        
+        .bw-hover:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .bw-hover-invert {
+            transition: all 0.2s ease;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+        
+        .bw-hover-invert:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+            border-left: 2px solid #fff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fff;
+        }
+
+        /* Table styles */
+        table.bw-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table.bw-table th, table.bw-table td {
+            border: 2px solid var(--text-color);
+            padding: 1rem;
+            text-align: left;
+        }
+        table.bw-table th {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+        }
+        
+        .grid-pattern {
+            background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-white selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="bw-border-b sticky top-0 bg-black z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold font-mono text-xl">
+                        CT
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight">CosmoTools</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 font-mono text-sm uppercase tracking-wide">
+                        <a href="#philosophy" class="hover:underline underline-offset-4">Philosophy</a>
+                        <a href="#tools" class="hover:underline underline-offset-4">The Tools</a>
+                        <a href="#difference" class="hover:underline underline-offset-4">Compare</a>
+                        <a href="https://bhuvanesh-m-dev.github.io/cosmotools" target="_blank" class="bw-border px-4 py-2 bw-hover font-bold">
+                            Open App ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden bw-border-b">
+        <div class="absolute inset-0 grid-pattern opacity-30"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 bw-border px-3 py-1 mb-8 font-mono text-xs uppercase">
+                    <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                    100% Client-Side Processing
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] mb-6">
+                    Pure Utilities. <br />
+                    <span class="font-mono font-normal text-4xl md:text-6xl italic">Zero Tracking.</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-10 leading-relaxed max-w-3xl font-light">
+                    A collection of fast, privacy-first web utilities that run entirely in your browser. Generate QR codes, create digital visiting cards, edit PDFs, and use powerful everyday tools — all without accounts, tracking, or intrusive ads.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 font-mono">
+                    <a href="https://bhuvanesh-m-dev.github.io/cosmotools" target="_blank" class="bw-border bw-hover-invert px-8 py-4 text-center font-bold uppercase tracking-widest text-lg flex items-center justify-center gap-2">
+                        Explore Tools <i data-lucide="compass" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="bw-border bw-hover px-8 py-4 text-center font-bold uppercase tracking-widest text-lg flex items-center justify-center gap-2">
+                        View on GitHub <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Philosophy Grid -->
+    <section id="philosophy" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Core Philosophy</h2>
+                <p class="font-mono text-lg opacity-80 uppercase tracking-widest">Just pure tools.</p>
+            </div>
+            <p class="max-w-md font-mono text-sm leading-relaxed border-l-2 border-white pl-4">
+                Tools should be fast, private, and accessible to everyone. Unlike many online utilities that rely on servers and tracking scripts, CosmoTools processes everything directly in your browser.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 bw-border">
+            <!-- Privacy -->
+            <div class="p-8 border-b md:border-b-0 md:border-r border-white flex flex-col group bw-hover">
+                <i data-lucide="shield-check" class="w-12 h-12 mb-6 group-hover:scale-110 transition-transform"></i>
+                <h3 class="text-2xl font-bold mb-4 uppercase tracking-wide">Privacy First</h3>
+                <p class="text-sm font-mono opacity-90 mb-4">No tracking scripts, no analytics trackers, no cookies for profiling, no hidden telemetry.</p>
+                <div class="mt-auto pt-4 border-t border-dashed border-gray-600 font-mono text-xs">
+                    Your files and data never leave your device.
+                </div>
+            </div>
+            <!-- No Ads -->
+            <div class="p-8 border-b md:border-b-0 md:border-r border-white flex flex-col group bw-hover">
+                <i data-lucide="ban" class="w-12 h-12 mb-6 group-hover:scale-110 transition-transform"></i>
+                <h3 class="text-2xl font-bold mb-4 uppercase tracking-wide">No Distractions</h3>
+                <p class="text-sm font-mono opacity-90 mb-4">Many platforms overload pages with ads. We provide a clean, distraction-free experience.</p>
+                <ul class="mt-auto pt-4 border-t border-dashed border-gray-600 font-mono text-xs space-y-1">
+                    <li>- No intrusive ads</li>
+                    <li>- No popup notifications</li>
+                    <li>- No misleading buttons</li>
+                </ul>
+            </div>
+            <!-- Stateless -->
+            <div class="p-8 flex flex-col group bw-hover">
+                <i data-lucide="server-off" class="w-12 h-12 mb-6 group-hover:scale-110 transition-transform"></i>
+                <h3 class="text-2xl font-bold mb-4 uppercase tracking-wide">Stateless Arch</h3>
+                <p class="text-sm font-mono opacity-90 mb-4">Does not rely on server-side storage. All operations are performed locally using JS.</p>
+                <ul class="mt-auto pt-4 border-t border-dashed border-gray-600 font-mono text-xs space-y-1">
+                    <li>- Faster processing</li>
+                    <li>- Fewer dependencies</li>
+                    <li>- Long-term reliability</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Tools Suite -->
+    <section id="tools" class="bg-white text-black py-20 bw-border-y border-black">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-16 text-center">Tools Included</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- CosmoEncode -->
+                <div class="border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all bg-white flex flex-col">
+                    <div class="flex items-center gap-4 mb-6 border-b-2 border-black pb-4">
+                        <div class="bg-black text-white p-3"><i data-lucide="qr-code" class="w-8 h-8"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-bold">CosmoEncode</h3>
+                            <span class="font-mono text-sm uppercase font-bold tracking-widest">QR Code Generator</span>
+                        </div>
+                    </div>
+                    <p class="mb-6 font-mono text-sm">Create customizable QR codes instantly. All generation happens directly in the browser.</p>
+                    <ul class="space-y-2 font-mono text-sm mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Styled QR patterns</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Permanent QR embeds</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> PNG and SVG downloads</li>
+                    </ul>
+                </div>
+
+                <!-- CosmoCard -->
+                <div class="border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all bg-white flex flex-col">
+                    <div class="flex items-center gap-4 mb-6 border-b-2 border-black pb-4">
+                        <div class="bg-black text-white p-3"><i data-lucide="contact" class="w-8 h-8"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-bold">CosmoCard</h3>
+                            <span class="font-mono text-sm uppercase font-bold tracking-widest">Digital Visiting Cards</span>
+                        </div>
+                    </div>
+                    <p class="mb-6 font-mono text-sm">Generate shareable digital business cards using a stateless URL system. Perfect for quick sharing.</p>
+                    <ul class="space-y-2 font-mono text-sm mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Shareable card links</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Automatic QR generation</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Optional profile details</li>
+                    </ul>
+                </div>
+
+                <!-- CosmoCalc -->
+                <div class="border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all bg-white flex flex-col">
+                    <div class="flex items-center gap-4 mb-6 border-b-2 border-black pb-4">
+                        <div class="bg-black text-white p-3"><i data-lucide="calculator" class="w-8 h-8"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-bold">CosmoCalc</h3>
+                            <span class="font-mono text-sm uppercase font-bold tracking-widest">Calculator Tools</span>
+                        </div>
+                    </div>
+                    <p class="mb-6 font-mono text-sm">A powerful calculator designed for quick everyday calculations and complex evaluations.</p>
+                    <ul class="space-y-2 font-mono text-sm mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Basic & scientific functions</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Expression evaluation</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Fast keyboard input</li>
+                    </ul>
+                </div>
+
+                <!-- CosmoPDF -->
+                <div class="border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all bg-white flex flex-col">
+                    <div class="flex items-center gap-4 mb-6 border-b-2 border-black pb-4">
+                        <div class="bg-black text-white p-3"><i data-lucide="file-text" class="w-8 h-8"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-bold">CosmoPDF</h3>
+                            <span class="font-mono text-sm uppercase font-bold tracking-widest">PDF Utilities</span>
+                        </div>
+                    </div>
+                    <p class="mb-6 font-mono text-sm">A collection of browser-based PDF utilities. All processing happens locally using modern APIs.</p>
+                    <ul class="space-y-2 font-mono text-sm mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> PDF viewer & Merge</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Split & Rotate pages</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-black"></div> Add watermarks</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section id="difference" class="py-20 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold tracking-tight mb-4 text-center">Why CosmoTools Is Different</h2>
+            <p class="text-center font-mono mb-12 opacity-80">Most online utility websites rely heavily on server processing and tracking systems. We take a different approach.</p>
+            
+            <div class="overflow-x-auto">
+                <table class="bw-table bg-black text-white">
+                    <thead>
+                        <tr class="bg-white text-black font-bold">
+                            <th>Feature</th>
+                            <th>CosmoTools</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-mono text-sm">
+                        <tr class="hover:bg-gray-900 transition-colors">
+                            <td class="font-bold flex items-center gap-2"><i data-lucide="mouse-pointer-click" class="w-4 h-4"></i> Ads</td>
+                            <td class="text-green-400">None</td>
+                        </tr>
+                        <tr class="hover:bg-gray-900 transition-colors">
+                            <td class="font-bold flex items-center gap-2"><i data-lucide="eye" class="w-4 h-4"></i> Tracking</td>
+                            <td class="text-green-400">None</td>
+                        </tr>
+                        <tr class="hover:bg-gray-900 transition-colors">
+                            <td class="font-bold flex items-center gap-2"><i data-lucide="user" class="w-4 h-4"></i> Accounts</td>
+                            <td>Not required</td>
+                        </tr>
+                        <tr class="hover:bg-gray-900 transition-colors">
+                            <td class="font-bold flex items-center gap-2"><i data-lucide="server" class="w-4 h-4"></i> Backend servers</td>
+                            <td>Not required</td>
+                        </tr>
+                        <tr class="hover:bg-gray-900 transition-colors">
+                            <td class="font-bold flex items-center gap-2"><i data-lucide="upload-cloud" class="w-4 h-4"></i> File uploads to servers</td>
+                            <td class="text-green-400">Never</td>
+                        </tr>
+                        <tr class="hover:bg-gray-900 transition-colors border-t-4 border-white">
+                            <td class="font-bold text-lg">Processing location</td>
+                            <td class="text-lg font-bold bg-white text-black">Your Browser</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center font-mono mt-6 text-lg font-bold">Your data stays with you.</p>
+        </div>
+    </section>
+
+    <!-- Tech Stack & Future -->
+    <section class="bw-border-y bg-white text-black">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            
+            <div class="p-12 md:p-20 border-b md:border-b-0 md:border-r border-black">
+                <h3 class="text-3xl font-bold mb-6 flex items-center gap-3 border-b-4 border-black pb-4 uppercase">
+                    <i data-lucide="code-2" class="w-8 h-8"></i> Built With
+                </h3>
+                <p class="font-mono text-sm mb-6 leading-relaxed">
+                    Built using modern web technologies. The entire platform is deployed on GitHub Pages, demonstrating how powerful tools can be built without backend infrastructure.
+                </p>
+                <div class="flex flex-wrap gap-3 font-mono text-sm font-bold">
+                    <span class="border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors cursor-default">HTML5</span>
+                    <span class="border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors cursor-default">CSS3</span>
+                    <span class="border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors cursor-default">JavaScript</span>
+                    <span class="border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors cursor-default">Client-side Libs</span>
+                </div>
+            </div>
+
+            <div class="p-12 md:p-20">
+                <h3 class="text-3xl font-bold mb-6 flex items-center gap-3 border-b-4 border-black pb-4 uppercase">
+                    <i data-lucide="rocket" class="w-8 h-8"></i> Future Tools
+                </h3>
+                <p class="font-mono text-sm mb-6 leading-relaxed">
+                    CosmoTools will continue expanding to create a complete browser-based utility suite. Planned additions include:
+                </p>
+                <ul class="space-y-3 font-mono text-sm font-bold">
+                    <li class="flex items-center gap-3"><i data-lucide="image" class="w-5 h-5"></i> Image Tools</li>
+                    <li class="flex items-center gap-3"><i data-lucide="file-cog" class="w-5 h-5"></i> Document Converters</li>
+                    <li class="flex items-center gap-3"><i data-lucide="table" class="w-5 h-5"></i> Spreadsheet Utilities</li>
+                    <li class="flex items-center gap-3"><i data-lucide="terminal" class="w-5 h-5"></i> Developer Tools</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Open Source & CTA -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+        <h2 class="text-4xl font-bold tracking-tight mb-6">Open Source Project</h2>
+        <p class="text-lg font-mono mb-12 max-w-2xl mx-auto opacity-80">
+            Created by <span class="text-white font-bold border-b border-white">Bhuvanesh M</span>. A developer focused on building practical tools, exploring stateless architectures, and creating open-source software that prioritizes privacy.
+        </p>
+        
+        <div class="font-mono bg-white text-black p-8 bw-border border-white inline-block text-left mb-12 transform -rotate-1 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)]">
+            <h3 class="font-bold text-xl mb-4 border-b-2 border-black pb-2">The Goal:</h3>
+            <ul class="space-y-2 font-bold uppercase">
+                <li><i data-lucide="check" class="inline w-4 h-4 mr-2"></i> Transparent</li>
+                <li><i data-lucide="check" class="inline w-4 h-4 mr-2"></i> Accessible</li>
+                <li><i data-lucide="check" class="inline w-4 h-4 mr-2"></i> Community Driven</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="text-2xl font-bold mb-6">Start using CosmoTools today.</h3>
+            <a href="https://bhuvanesh-m-dev.github.io/cosmotools" target="_blank" class="inline-block bg-white text-black border-2 border-white px-10 py-5 text-xl font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-300">
+                Visit CosmoTools ↗
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t-2 border-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-white text-black flex items-center justify-center font-bold font-mono text-xs">CT</div>
+                <span class="font-bold text-lg">CosmoTools</span>
+            </div>
+            
+            <div class="text-center md:text-left font-mono text-sm opacity-80">
+                Maintained by <span class="font-bold text-white">Bhuvanesh M</span>
+            </div>
+
+            <div class="flex gap-6 font-mono text-sm font-bold uppercase tracking-wider">
+                <a href="https://bhuvanesh-m-dev.github.io/cosmotools" target="_blank" class="hover:underline flex items-center gap-1">
+                    App <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+                <a href="#" class="hover:underline flex items-center gap-1">
+                    GitHub <i data-lucide="github" class="w-3 h-3"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
