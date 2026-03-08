@@ -11,9 +11,6 @@ const themeToggleBtn = document.getElementById('theme-toggle');
 let files = [];
 let draggedIndex = null;
 
-// Configure PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
 // Drag and Drop Events
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -40,7 +37,9 @@ fileInput.addEventListener('change', (e) => {
 });
 
 function handleFiles(newFiles) {
-    const validFiles = Array.from(newFiles).filter(file => file.type === 'application/pdf');
+    const validFiles = Array.from(newFiles).filter(file => 
+        file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
+    );
     
     if (validFiles.length === 0 && newFiles.length > 0) {
         alert('Please upload PDF files only.');
@@ -67,7 +66,7 @@ function renderFileList() {
     
     files.forEach((file, index) => {
         const item = document.createElement('div');
-        item.className = 'file-item relative bg-black p-4 border-2 border-white flex items-center justify-between group hover:bg-gray-900 transition-colors cursor-move';
+        item.className = 'file-item bg-black p-4 border-2 border-white flex items-center justify-between group hover:bg-gray-900 transition-colors cursor-move';
         
         item.draggable = true;
 
@@ -116,18 +115,10 @@ function renderFileList() {
                     PDF
                 </div>
                 <div class="min-w-0">
-                    <p id="file-name-${index}" class="font-bold text-white truncate font-mono text-sm cursor-help hover:text-gray-300 transition-colors">${file.name}</p>
+                    <p class="font-bold text-white truncate font-mono text-sm">${file.name}</p>
                     <p class="text-xs text-gray-400 font-mono">${formatSize(file.size)}</p>
                 </div>
             </div>
-            
-            <!-- Preview Tooltip -->
-            <div id="preview-${index}" class="hidden fixed left-8 top-1/2 -translate-y-1/2 z-50 bg-black border-2 border-white p-1 shadow-2xl pointer-events-none">
-                <div class="w-64 h-80 flex items-center justify-center bg-gray-900">
-                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                </div>
-            </div>
-
             <div class="flex items-center gap-2">
                 <button onclick="moveFile(${index}, -1)" class="w-8 h-8 border border-white text-white hover:bg-white hover:text-black transition flex items-center justify-center ${index === 0 ? 'opacity-30 cursor-not-allowed' : ''}" ${index === 0 ? 'disabled' : ''}>
                     <i class="fas fa-arrow-up"></i>
@@ -142,53 +133,7 @@ function renderFileList() {
         `;
         
         fileList.appendChild(item);
-
-        // Add hover events for preview
-        const nameEl = item.querySelector(`#file-name-${index}`);
-        const previewEl = item.querySelector(`#preview-${index}`);
-        
-        nameEl.addEventListener('mouseenter', () => {
-            previewEl.classList.remove('hidden');
-            renderPreview(file, previewEl);
-        });
-        
-        nameEl.addEventListener('mouseleave', () => {
-            previewEl.classList.add('hidden');
-        });
     });
-}
-
-async function renderPreview(file, container) {
-    if (container.querySelector('canvas')) return; // Already rendered
-
-    try {
-        const arrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-        const page = await pdf.getPage(1);
-        
-        const viewport = page.getViewport({ scale: 1 });
-        const desiredWidth = 256; // w-64 is roughly 256px
-        const scale = desiredWidth / viewport.width;
-        const scaledViewport = page.getViewport({ scale });
-
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.height = scaledViewport.height;
-        canvas.width = scaledViewport.width;
-
-        const renderContext = {
-            canvasContext: context,
-            viewport: scaledViewport
-        };
-        
-        await page.render(renderContext).promise;
-        
-        container.innerHTML = '';
-        container.appendChild(canvas);
-    } catch (error) {
-        console.error('Error rendering preview:', error);
-        container.innerHTML = '<div class="w-64 h-80 flex items-center justify-center text-red-500 text-xs text-center p-2">Preview failed</div>';
-    }
 }
 
 window.moveFile = (index, direction) => {
@@ -225,26 +170,74 @@ mergeBtn.addEventListener('click', async () => {
         return;
     }
 
+    if (typeof PDFLib === 'undefined') {
+        alert('PDF library is not loaded. Please refresh the page or check your internet connection.');
+        return;
+    }
+
     try {
-        loading.classList.remove('hidden');
+        if (loading) loading.classList.remove('hidden');
         
         const mergedPdf = await PDFLib.PDFDocument.create();
         
         for (const file of files) {
-            const arrayBuffer = await file.arrayBuffer();
-            const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-            const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-            copiedPages.forEach((page) => mergedPdf.addPage(page));
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                let pdf;
+                
+                try {
+                    pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                } catch (loadError) {
+                    if (loadError.message && loadError.message.toLowerCase().includes('encrypted')) {
+                        const password = prompt(`The file "${file.name}" is password protected.\nPlease enter the password to unlock it:`);
+                        if (password) {
+                            try {
+                                pdf = await PDFLib.PDFDocument.load(arrayBuffer, { password });
+                            } catch (pwError) {
+                                throw new Error(`Incorrect password for "${file.name}".`);
+                            }
+                        } else {
+                            throw new Error(`Password required for "${file.name}".`);
+                        }
+                    } else {
+                        throw loadError;
+                    }
+                }
+
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+            } catch (e) {
+                console.error(`Error processing file ${file.name}:`, e);
+                
+                const shouldSkip = confirm(`Failed to process "${file.name}".\nReason: ${e.message}\n\nDo you want to skip this file and continue merging the others?`);
+                
+                if (!shouldSkip) {
+                    throw new Error('Merge cancelled.');
+                }
+            }
+        }
+        
+        if (mergedPdf.getPageCount() === 0) {
+            throw new Error('No valid pages were merged.');
         }
         
         const pdfBytes = await mergedPdf.save();
-        download(pdfBytes, "merged-document.pdf", "application/pdf");
+        
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'merged-document.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
         
     } catch (error) {
         console.error('Error merging PDFs:', error);
-        alert('An error occurred while merging the PDFs. Please try again.');
+        alert(error.message || 'An error occurred while merging the PDFs.');
     } finally {
-        loading.classList.add('hidden');
+        if (loading) loading.classList.add('hidden');
     }
 });
 
