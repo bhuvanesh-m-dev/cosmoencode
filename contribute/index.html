@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute | CosmoTools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Brutalist utility classes */
+        .bw-border {
+            border: 2px solid var(--text-color);
+        }
+
+        .bw-border-b {
+            border-bottom: 2px solid var(--text-color);
+        }
+
+        .bw-hover {
+            transition: all 0.2s ease;
+        }
+
+        .bw-hover:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .bw-hover-invert {
+            transition: all 0.2s ease;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .bw-hover-invert:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+            border-left: 2px solid #fff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fff;
+        }
+
+        .grid-pattern {
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .hero-text {
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .step-number {
+            font-size: 4rem;
+            line-height: 1;
+            opacity: 0.2;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="grid-pattern min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bw-border-b">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <span class="font-bold text-2xl tracking-tighter font-mono uppercase">COSMOTOOLS</span>
+            <div class="hidden md:flex gap-1">
+                <a href="#ways" class="px-4 py-2 bw-hover font-mono text-sm uppercase">Ways to Help</a>
+                <a href="#guidelines" class="px-4 py-2 bw-hover font-mono text-sm uppercase">Guidelines</a>
+                <a href="https://github.com/bhuvanesh-m-dev/cosmotools" target="_blank" class="px-4 py-2 bw-hover font-mono text-sm uppercase">Fork Repository</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-40 pb-20 px-6">
+        <!-- Hero Section -->
+        <section class="max-w-5xl mx-auto mb-32">
+            <div class="bw-border p-8 md:p-16 inline-block bg-black">
+                <h1 class="text-5xl md:text-8xl font-bold hero-text leading-[0.9] mb-10">
+                    Contribute to<br/>
+                    the Project
+                </h1>
+                <p class="text-xl md:text-2xl font-mono leading-relaxed max-w-4xl opacity-80">
+                    Thank you for your interest. CosmoTools is an open initiative building stateless, browser-first utilities. No backend. No installation. Just open collaboration.
+                </p>
+            </div>
+        </section>
+
+        <!-- Why Contribute -->
+        <section id="why" class="max-w-7xl mx-auto mb-32 grid md:grid-cols-2 gap-0 bw-border bg-white text-black">
+            <div class="p-10 md:p-16 border-b-2 md:border-b-0 md:border-r-2 border-black">
+                <h2 class="text-4xl font-bold uppercase mb-8">Why Contribute?</h2>
+                <p class="text-lg leading-relaxed mb-8 font-medium">
+                    Open collaboration ensures tools remain useful for everyone. Your help drives the growth of a transparent utility ecosystem.
+                </p>
+                <ul class="font-mono space-y-3 text-sm">
+                    <li>[+] Add new tools and modules</li>
+                    <li>[+] Improve UX/UI responsiveness</li>
+                    <li>[+] Fix bugs & optimize performance</li>
+                    <li>[+] Write/Update documentation</li>
+                    <li>[+] Suggest architectural ideas</li>
+                </ul>
+            </div>
+            <div class="p-10 md:p-16 bg-black text-white flex flex-col justify-center">
+                <blockquote class="text-2xl md:text-3xl font-bold uppercase italic leading-tight">
+                    "Every contribution, small or large, makes these tools more accessible for everyone."
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- Ways to Contribute -->
+        <section id="ways" class="max-w-7xl mx-auto mb-32">
+            <div class="flex items-center gap-4 mb-12">
+                <h2 class="text-4xl font-bold uppercase">Ways to Contribute</h2>
+                <div class="h-[2px] flex-grow bg-white"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bw-border p-8 bg-black hover:bg-neutral-900 transition-colors">
+                    <h3 class="font-mono font-bold text-xl mb-4 uppercase">01. Add Tools</h3>
+                    <p class="text-sm opacity-70 mb-4">Submit new modules like PDF utils, image tools, or dev utilities. Must run entirely client-side.</p>
+                </div>
+                <div class="bw-border p-8 bg-black hover:bg-neutral-900 transition-colors">
+                    <h3 class="font-mono font-bold text-xl mb-4 uppercase">02. Fix & Optimize</h3>
+                    <p class="text-sm opacity-70 mb-4">Optimize current code, improve mobile responsiveness, or enhance existing functionality.</p>
+                </div>
+                <div class="bw-border p-8 bg-black hover:bg-neutral-900 transition-colors">
+                    <h3 class="font-mono font-bold text-xl mb-4 uppercase">03. Documentation</h3>
+                    <p class="text-sm opacity-70 mb-4">Help us write clearer guides, code examples, and feature explanations for future users.</p>
+                </div>
+                <div class="bw-border p-8 bg-black hover:bg-neutral-900 transition-colors">
+                    <h3 class="font-mono font-bold text-xl mb-4 uppercase">04. UI/Design</h3>
+                    <p class="text-sm opacity-70 mb-4">Propose cleaner layouts, accessibility improvements, or consistent component styling.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guidelines -->
+        <section id="guidelines" class="max-w-5xl mx-auto mb-32">
+            <div class="bw-border p-10 md:p-16 bg-white text-black">
+                <h2 class="text-4xl font-bold uppercase mb-10 font-mono tracking-tighter">Contribution Guidelines</h2>
+                <div class="space-y-8 font-mono">
+                    <div class="flex gap-6 items-start">
+                        <span class="text-2xl font-bold text-black">[!]</span>
+                        <p class="text-lg">Code must be clean, well-organized, and work in all modern browsers.</p>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <span class="text-2xl font-bold text-black">[!]</span>
+                        <p class="text-lg">Tools MUST NOT rely on backend services. Processing must happen locally.</p>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <span class="text-2xl font-bold text-black">[!]</span>
+                        <p class="text-lg">Avoid unnecessary external dependencies to keep tools lightweight.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Submit -->
+        <section class="max-w-7xl mx-auto mb-32">
+            <div class="flex items-center gap-4 mb-12">
+                <h2 class="text-4xl font-bold uppercase">Submission Process</h2>
+                <div class="h-[2px] flex-grow bg-white"></div>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-4">
+                <div class="bw-border p-6 relative">
+                    <span class="step-number absolute top-2 right-2">1</span>
+                    <h4 class="font-bold uppercase font-mono mt-8">Fork Repo</h4>
+                    <p class="text-xs opacity-60 mt-2">Clone to your local machine.</p>
+                </div>
+                <div class="bw-border p-6 relative">
+                    <span class="step-number absolute top-2 right-2">2</span>
+                    <h4 class="font-bold uppercase font-mono mt-8">New Branch</h4>
+                    <p class="text-xs opacity-60 mt-2">Create a feature-specific branch.</p>
+                </div>
+                <div class="bw-border p-6 relative">
+                    <span class="step-number absolute top-2 right-2">3</span>
+                    <h4 class="font-bold uppercase font-mono mt-8">Implement</h4>
+                    <p class="text-xs opacity-60 mt-2">Write clean, efficient logic.</p>
+                </div>
+                <div class="bw-border p-6 relative">
+                    <span class="step-number absolute top-2 right-2">4</span>
+                    <h4 class="font-bold uppercase font-mono mt-8">Test Local</h4>
+                    <p class="text-xs opacity-60 mt-2">Ensure browser compatibility.</p>
+                </div>
+                <div class="bw-border p-6 relative">
+                    <span class="step-number absolute top-2 right-2">5</span>
+                    <h4 class="font-bold uppercase font-mono mt-8">Submit PR</h4>
+                    <p class="text-xs opacity-60 mt-2">Detail your changes clearly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="max-w-5xl mx-auto text-center">
+            <div class="bw-border p-16 bg-black">
+                <h2 class="text-4xl font-bold uppercase mb-8">Have a new idea?</h2>
+                <p class="font-mono text-lg mb-10 opacity-70">Suggest a feature or utility even if you aren't ready to build it yet.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools/issues" class="px-10 py-5 bw-hover-invert font-bold uppercase tracking-tighter text-xl">
+                        Open an Issue _
+                    </a>
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools" class="px-10 py-5 bw-hover font-bold uppercase tracking-tighter text-xl bw-border">
+                        Fork GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bw-border-t py-16 bg-black mt-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+            <div>
+                <p class="font-mono text-sm uppercase mb-4 opacity-50 tracking-widest">Collaborate on</p>
+                <a href="https://github.com/bhuvanesh-m-dev" class="text-4xl font-bold bw-hover inline-block px-2 -ml-2 uppercase tracking-tighter">
+                    Bhuvanesh M
+                </a>
+            </div>
+            
+            <div class="flex flex-col gap-2 text-right items-start md:items-end">
+                <div class="flex gap-4 font-mono text-sm uppercase">
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools/issues" class="bw-hover p-1">Issues</a>
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools/discussions" class="bw-hover p-1">Discussions</a>
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools/wiki" class="bw-hover p-1">Wiki</a>
+                </div>
+                <p class="text-xs font-mono opacity-50 mt-4 uppercase tracking-widest">
+                    CosmoTools Community Core // 2024
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
