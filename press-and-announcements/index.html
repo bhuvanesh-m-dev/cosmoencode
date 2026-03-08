@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press & Announcements | CosmoTools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Brutalist utility classes */
+        .bw-border {
+            border: 2px solid var(--text-color);
+        }
+
+        .bw-border-b {
+            border-bottom: 2px solid var(--text-color);
+        }
+
+        .bw-hover {
+            transition: all 0.2s ease;
+        }
+
+        .bw-hover:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .bw-hover-invert {
+            transition: all 0.2s ease;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .bw-hover-invert:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+            border-left: 2px solid #fff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fff;
+        }
+
+        .grid-pattern {
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .hero-text {
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .press-card {
+            transition: transform 0.2s ease;
+        }
+        .press-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="grid-pattern min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bw-border-b">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <span class="font-bold text-2xl tracking-tighter font-mono uppercase">COSMOTOOLS</span>
+            <div class="hidden md:flex gap-1">
+                <a href="#updates" class="px-4 py-2 bw-hover font-mono text-sm uppercase">Updates</a>
+                <a href="#philosophy" class="px-4 py-2 bw-hover font-mono text-sm uppercase">Philosophy</a>
+                <a href="https://github.com/bhuvanesh-m-dev/cosmotools" target="_blank" class="px-4 py-2 bw-hover font-mono text-sm uppercase">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-40 pb-20 px-6">
+        <!-- Hero Section -->
+        <section class="max-w-5xl mx-auto mb-32">
+            <div class="bw-border p-8 md:p-16 inline-block bg-black">
+                <h1 class="text-5xl md:text-8xl font-bold hero-text leading-[0.9] mb-10">
+                    Press &<br/>
+                    Announcements
+                </h1>
+                <p class="text-xl md:text-2xl font-mono leading-relaxed max-w-4xl opacity-80">
+                    Official platform updates and milestones for the privacy-first ecosystem of browser utilities.
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Announcement -->
+        <section id="updates" class="max-w-7xl mx-auto mb-32">
+            <div class="flex items-center gap-4 mb-12">
+                <h2 class="text-3xl font-bold uppercase font-mono">Latest Release</h2>
+                <div class="h-[2px] flex-grow bg-white"></div>
+            </div>
+
+            <div class="bw-border bg-white text-black p-10 md:p-16 mb-12">
+                <div class="font-mono text-sm mb-6 uppercase tracking-widest bg-black text-white inline-block px-3 py-1">Released: 2024.03</div>
+                <h2 class="text-4xl md:text-6xl font-bold uppercase mb-8 leading-tight">CosmoTools – Early Platform Release</h2>
+                <p class="text-xl mb-10 leading-relaxed font-medium">
+                    The first public version of CosmoTools introduces a lightweight ecosystem of browser-based utilities focused on everyday productivity.
+                </p>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-6 bw-border border-black">
+                        <h4 class="font-bold text-lg mb-2 uppercase font-mono">CosmoEncode</h4>
+                        <p class="text-sm opacity-70 italic">QR code generation</p>
+                    </div>
+                    <div class="p-6 bw-border border-black">
+                        <h4 class="font-bold text-lg mb-2 uppercase font-mono">CosmoCard</h4>
+                        <p class="text-sm opacity-70 italic">Stateless digital cards</p>
+                    </div>
+                    <div class="p-6 bw-border border-black">
+                        <h4 class="font-bold text-lg mb-2 uppercase font-mono">CosmoCalc</h4>
+                        <p class="text-sm opacity-70 italic">Browser-based calculator</p>
+                    </div>
+                    <div class="p-6 bw-border border-black">
+                        <h4 class="font-bold text-lg mb-2 uppercase font-mono">CosmoPDF</h4>
+                        <p class="text-sm opacity-70 italic">Client-side PDF tools</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy & Development -->
+        <section id="philosophy" class="max-w-7xl mx-auto mb-32 grid md:grid-cols-2 gap-8">
+            <!-- Privacy Card -->
+            <div class="bw-border p-10 bg-black flex flex-col">
+                <h3 class="text-3xl font-bold uppercase mb-8 font-mono tracking-tighter text-white">Privacy Philosophy</h3>
+                <p class="text-lg opacity-80 leading-relaxed mb-8">
+                    CosmoTools is designed around a simple principle: useful tools should respect user privacy. We avoid tracking, advertisements, and server-side processing.
+                </p>
+                <ul class="space-y-3 font-mono text-sm opacity-60">
+                    <li>_ No intrusive ads</li>
+                    <li>_ No tracking scripts</li>
+                    <li>_ No data collection</li>
+                    <li>_ Local device processing</li>
+                </ul>
+            </div>
+
+            <!-- Open Development Card -->
+            <div class="bw-border p-10 bg-white text-black flex flex-col">
+                <h3 class="text-3xl font-bold uppercase mb-8 font-mono tracking-tighter">Open Development</h3>
+                <p class="text-lg leading-relaxed mb-8 font-medium">
+                    Developed as an open project by Bhuvanesh M. The goal is to explore modern stateless architectures while building practical, accessible tools.
+                </p>
+                <div class="mt-auto">
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools" target="_blank" class="px-6 py-3 bw-border border-black bg-black text-white hover:bg-white hover:text-black transition-all font-mono font-bold uppercase inline-block">
+                        View Open Source _
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Announcements -->
+        <section class="max-w-5xl mx-auto mb-32">
+            <div class="bw-border p-12 bg-black border-dashed opacity-80">
+                <h3 class="text-2xl font-bold uppercase font-mono mb-6 text-center">Upcoming Announcements</h3>
+                <div class="grid md:grid-cols-2 gap-8 font-mono text-sm">
+                    <div class="p-4 bw-border border-white/20">
+                        <span class="opacity-40 block mb-2">[ SCHEDULED ]</span>
+                        <p>New tools added to the CosmoTools platform ecosystem.</p>
+                    </div>
+                    <div class="p-4 bw-border border-white/20">
+                        <span class="opacity-40 block mb-2">[ QUEUED ]</span>
+                        <p>Performance improvements and major feature releases.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Media & Links -->
+        <section class="max-w-7xl mx-auto mb-32 text-center">
+            <div class="bw-border p-16 bg-white text-black">
+                <h2 class="text-4xl font-bold uppercase mb-12 font-mono">Platform Resources</h2>
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <a href="https://bhuvanesh-m-dev.github.io/cosmotools" class="px-10 py-5 bw-border border-black bg-black text-white font-bold uppercase hover:bg-white hover:text-black transition-all text-xl">
+                        Launch Platform
+                    </a>
+                    <a href="https://github.com/bhuvanesh-m-dev" class="px-10 py-5 bw-border border-black bg-white text-black font-bold uppercase hover:bg-black hover:text-white transition-all text-xl">
+                        Developer GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   <!-- Footer -->
+    <footer class="bw-border-t py-16 bg-black">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+            <div>
+                <p class="font-mono text-sm uppercase mb-4 opacity-50">Handcrafted by</p>
+                <a href="https://github.com/bhuvanesh-m-dev" class="text-4xl font-bold bw-hover inline-block px-2 -ml-2">
+                    Bhuvanesh M
+                </a>
+            </div>
+            
+            <div class="flex flex-col gap-2 text-right items-start md:items-end">
+                <div class="flex gap-4 font-mono text-sm uppercase">
+                    <a href="https://github.com/bhuvanesh-m-dev/cosmotools" class="bw-hover p-1">GitHub</a>
+                    <a href="https://x.com/bhuvaneshm06" class="bw-hover p-1">Twitter</a>
+                </div>
+                <p class="text-xs font-mono opacity-50 mt-4">
+                    BUILT_WITH_LOVE &copy; 2026 - Present
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
