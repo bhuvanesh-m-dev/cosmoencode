@@ -9,6 +9,7 @@ const loading = document.getElementById('loading');
 const themeToggleBtn = document.getElementById('theme-toggle');
 
 let files = [];
+let draggedIndex = null;
 
 // Drag and Drop Events
 dropZone.addEventListener('dragover', (e) => {
@@ -63,7 +64,48 @@ function renderFileList() {
     
     files.forEach((file, index) => {
         const item = document.createElement('div');
-        item.className = 'file-item bg-black p-4 border-2 border-white flex items-center justify-between group hover:bg-gray-900 transition-colors';
+        item.className = 'file-item bg-black p-4 border-2 border-white flex items-center justify-between group hover:bg-gray-900 transition-colors cursor-move';
+        
+        item.draggable = true;
+
+        item.addEventListener('dragstart', (e) => {
+            draggedIndex = index;
+            item.classList.add('opacity-50');
+            e.dataTransfer.effectAllowed = 'move';
+        });
+
+        item.addEventListener('dragend', () => {
+            draggedIndex = null;
+            item.classList.remove('opacity-50');
+            document.querySelectorAll('.file-item').forEach(el => {
+                el.classList.remove('border-dashed', 'bg-gray-800');
+            });
+        });
+
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        item.addEventListener('dragenter', () => {
+            if (draggedIndex !== null && draggedIndex !== index) {
+                item.classList.add('border-dashed', 'bg-gray-800');
+            }
+        });
+
+        item.addEventListener('dragleave', (e) => {
+            if (item.contains(e.relatedTarget)) return;
+            item.classList.remove('border-dashed', 'bg-gray-800');
+        });
+
+        item.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (draggedIndex !== null && draggedIndex !== index) {
+                const itemToMove = files[draggedIndex];
+                files.splice(draggedIndex, 1);
+                files.splice(index, 0, itemToMove);
+                updateUI();
+            }
+        });
         
         item.innerHTML = `
             <div class="flex items-center gap-4 overflow-hidden">
