@@ -6,6 +6,7 @@ const fileCount = document.getElementById('file-count');
 const mergeBtn = document.getElementById('merge-btn');
 const clearAllBtn = document.getElementById('clear-all');
 const loading = document.getElementById('loading');
+const themeToggleBtn = document.getElementById('theme-toggle');
 
 let files = [];
 
@@ -145,5 +146,25 @@ mergeBtn.addEventListener('click', async () => {
         alert('An error occurred while merging the PDFs. Please try again.');
     } finally {
         loading.classList.add('hidden');
+    }
+});
+
+// Theme Toggle Logic
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    themeToggleBtn.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+    const icon = themeToggleBtn.querySelector('i');
+    
+    if (document.body.classList.contains('light-theme')) {
+        localStorage.setItem('theme', 'light');
+        icon.classList.replace('fa-sun', 'fa-moon');
+    } else {
+        localStorage.setItem('theme', 'dark');
+        icon.classList.replace('fa-moon', 'fa-sun');
     }
 });
