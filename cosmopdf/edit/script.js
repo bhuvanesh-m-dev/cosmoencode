@@ -1,7 +1,7 @@
 // --- State Management ---
-let currentFile = null; // Single File object
-let originalPdfBytes = null; // Original file bytes
-let pageState = []; // Array of { id, pageIndex, rotation, objectUrl, selected }
+let currentFile = null;
+let originalPdfBytes = null;
+let pageState = [];
 let draggedPageId = null;
 
 // --- DOM Elements ---
@@ -22,22 +22,25 @@ const selectedCountEl = document.getElementById('selected-count');
 const downloadSelectedBtn = document.getElementById('download-selected-btn');
 const savePdfBtn = document.getElementById('save-pdf-btn');
 const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const rotateAllBtn = document.getElementById('rotate-all-btn');
+const resetBtn = document.getElementById('reset-btn');
+const selectAllBtn = document.getElementById('select-all-btn');
+const clearSelectionBtn = document.getElementById('clear-selection-btn');
 
 // --- Initialization ---
 
 // PDF.js Worker
 if (window.pdfjsLib) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
 }
 
 // Theme Logic
 const savedTheme = localStorage.getItem('theme');
-const themeIcon = document.getElementById('theme-icon');
 
 if (savedTheme === 'light') {
     document.body.classList.add('light-theme');
     themeIcon.classList.replace('fa-sun', 'fa-moon');
-    themeIcon.classList.replace('text-yellow-500', 'text-blue-600');
 }
 
 themeToggleBtn.addEventListener('click', () => {
@@ -45,11 +48,9 @@ themeToggleBtn.addEventListener('click', () => {
     if (document.body.classList.contains('light-theme')) {
         localStorage.setItem('theme', 'light');
         themeIcon.classList.replace('fa-sun', 'fa-moon');
-        themeIcon.classList.replace('text-yellow-500', 'text-blue-600');
     } else {
         localStorage.setItem('theme', 'dark');
         themeIcon.classList.replace('fa-moon', 'fa-sun');
-        themeIcon.classList.replace('text-blue-600', 'text-yellow-500');
     }
 });
 
@@ -76,19 +77,23 @@ dropZone.addEventListener('click', () => fileInput.click());
 
 fileInput.addEventListener('change', (e) => {
     if (e.target.files.length > 0) handleFile(e.target.files[0]);
-    fileInput.value = ''; // Reset
+    fileInput.value = '';
 });
 
 clearFileBtn.addEventListener('click', clearFile);
 
-document.getElementById('rotate-all-btn').addEventListener('click', () => {
-    pageState.forEach(p => p.rotation = (p.rotation + 90) % 360);
-    renderPages();
-});
+if (rotateAllBtn) {
+    rotateAllBtn.addEventListener('click', () => {
+        pageState.forEach(p => p.rotation = (p.rotation + 90) % 360);
+        renderPages();
+    });
+}
 
-document.getElementById('reset-btn').addEventListener('click', () => {
-    if (currentFile) processFile(currentFile);
-});
+if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+        if (currentFile) processFile(currentFile);
+    });
+}
 
 savePdfBtn.addEventListener('click', () => savePdf(pageState.map(p => p.pageIndex)));
 
@@ -98,18 +103,22 @@ downloadSelectedBtn.addEventListener('click', () => {
     savePdf(selectedPages.map(p => p.pageIndex), 'selected-pages.pdf');
 });
 
-document.getElementById('select-all-btn').addEventListener('click', () => {
-    pageState.forEach(p => p.selected = true);
-    updateSelectionUI();
-    renderPages();
-});
+if (selectAllBtn) {
+    selectAllBtn.addEventListener('click', () => {
+        pageState.forEach(p => p.selected = true);
+        updateSelectionUI();
+        renderPages();
+    });
+}
 
-document.getElementById('clear-selection-btn').addEventListener('click', () => {
-    pageState.forEach(p => p.selected = false);
-    pageRangeInput.value = '';
-    updateSelectionUI();
-    renderPages();
-});
+if (clearSelectionBtn) {
+    clearSelectionBtn.addEventListener('click', () => {
+        pageState.forEach(p => p.selected = false);
+        pageRangeInput.value = '';
+        updateSelectionUI();
+        renderPages();
+    });
+}
 
 pageRangeInput.addEventListener('input', (e) => {
     parsePageRange(e.target.value);
@@ -118,15 +127,14 @@ pageRangeInput.addEventListener('input', (e) => {
 // --- Core Functions ---
 
 function handleFile(file) {
-    if (!file.type === 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
         alert('Please upload a PDF file only.');
         return;
     }
     
     currentFile = file;
-    originalPdfBytes = null; // Will be set in processFile
+    originalPdfBytes = null;
     
-    // Update UI
     fileNameEl.textContent = file.name;
     fileSizeEl.textContent = formatSize(file.size);
     fileInfo.classList.remove('hidden');
@@ -157,10 +165,8 @@ async function processFile(file) {
     loading.classList.add('flex');
     
     try {
-        // Store original bytes
         originalPdfBytes = await file.arrayBuffer();
         
-        // Use PDF.js to get thumbnails
         const pdf = await pdfjsLib.getDocument({ data: originalPdfBytes }).promise;
         totalPagesEl.textContent = pdf.numPages;
         editorStatus.textContent = `${pdf.numPages} pages loaded`;
@@ -169,7 +175,7 @@ async function processFile(file) {
         
         for (let i = 0; i < pdf.numPages; i++) {
             const page = await pdf.getPage(i + 1);
-            const viewport = page.getViewport({ scale: 0.4 }); // Thumbnail scale
+            const viewport = page.getViewport({ scale: 0.4 });
             
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -185,7 +191,7 @@ async function processFile(file) {
 
             pageState.push({
                 id: `page-${i}`,
-                pageIndex: i, // 0-based index for pdf-lib
+                pageIndex: i,
                 rotation: 0,
                 objectUrl: objectUrl,
                 selected: false
@@ -212,7 +218,7 @@ function renderPages() {
         pagesGrid.innerHTML = `
             <div class="col-span-full flex flex-col items-center justify-center py-20 text-gray-400">
                 <i class="fas fa-th-large text-4xl mb-4 opacity-20"></i>
-                <p>Upload a PDF to start editing</p>
+                <p class="font-mono">Upload a PDF to start editing</p>
             </div>`;
         return;
     }
@@ -224,7 +230,6 @@ function renderPages() {
         el.dataset.id = page.id;
         el.dataset.index = index;
 
-        // Drag Events
         el.addEventListener('dragstart', handleDragStart);
         el.addEventListener('dragenter', handleDragEnter);
         el.addEventListener('dragover', handleDragOver);
@@ -232,7 +237,6 @@ function renderPages() {
         el.addEventListener('drop', handleDrop);
         el.addEventListener('dragend', handleDragEnd);
         
-        // Click to select
         el.addEventListener('click', (e) => {
             if (!e.target.closest('button')) {
                 page.selected = !page.selected;
@@ -241,7 +245,6 @@ function renderPages() {
             }
         });
 
-        // Image Container
         const imgContainer = document.createElement('div');
         imgContainer.className = 'bg-gray-100 dark:bg-gray-800 rounded overflow-hidden relative aspect-[3/4] flex items-center justify-center';
         
@@ -252,7 +255,6 @@ function renderPages() {
         
         imgContainer.appendChild(img);
 
-        // Selection Indicator
         if (page.selected) {
             const checkIndicator = document.createElement('div');
             checkIndicator.className = 'absolute top-2 left-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs';
@@ -260,20 +262,18 @@ function renderPages() {
             imgContainer.appendChild(checkIndicator);
         }
 
-        // Controls Overlay
         const controls = document.createElement('div');
         controls.className = 'absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-sm';
         controls.innerHTML = `
-            <button class="w-8 h-8 rounded-full bg-white text-black hover:bg-blue-500 hover:text-white flex items-center justify-center transition-colors" title="Rotate Left" onclick="rotatePage('${page.id}', -90)">
+            <button class="w-8 h-8 rounded-full bg-white text-black hover:bg-blue-500 hover:text-white flex items-center justify-center transition-colors rotate-left-btn" title="Rotate Left" data-id="${page.id}" data-deg="-90">
                 <i class="fas fa-undo-alt text-xs"></i>
             </button>
-            <button class="w-8 h-8 rounded-full bg-white text-black hover:bg-blue-500 hover:text-white flex items-center justify-center transition-colors" title="Rotate Right" onclick="rotatePage('${page.id}', 90)">
+            <button class="w-8 h-8 rounded-full bg-white text-black hover:bg-blue-500 hover:text-white flex items-center justify-center transition-colors rotate-right-btn" title="Rotate Right" data-id="${page.id}" data-deg="90">
                 <i class="fas fa-redo-alt text-xs"></i>
             </button>
         `;
         imgContainer.appendChild(controls);
 
-        // Footer
         const footer = document.createElement('div');
         footer.className = 'flex justify-between items-center text-xs text-gray-500 font-mono';
         footer.innerHTML = `
@@ -285,34 +285,45 @@ function renderPages() {
         el.appendChild(footer);
         pagesGrid.appendChild(el);
     });
+
+    // Add rotate button event listeners
+    document.querySelectorAll('.rotate-left-btn, .rotate-right-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = btn.dataset.id;
+            const deg = parseInt(btn.dataset.deg);
+            rotatePage(id, deg);
+        });
+    });
 }
 
 // --- Editor Actions ---
 
-window.rotatePage = (id, deg) => {
+function rotatePage(id, deg) {
     const page = pageState.find(p => p.id === id);
     if (page) {
         page.rotation = (page.rotation + deg) % 360;
         if (page.rotation < 0) page.rotation += 360;
         renderPages();
     }
-};
+}
 
-// --- Drag and Drop Logic (Grid) ---
+// --- Drag and Drop Logic ---
 
 function handleDragStart(e) {
     draggedPageId = this.dataset.id;
     this.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', this.dataset.id);
 }
 
 function handleDragOver(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-    return false;
 }
 
 function handleDragEnter(e) {
+    e.preventDefault();
     if (this.dataset.id !== draggedPageId) {
         this.classList.add('border-blue-500', 'border-dashed');
     }
@@ -323,33 +334,36 @@ function handleDragLeave(e) {
 }
 
 function handleDrop(e) {
+    e.preventDefault();
     e.stopPropagation();
     const targetId = this.dataset.id;
 
-    if (draggedPageId !== targetId) {
+    if (draggedPageId && draggedPageId !== targetId) {
         const fromIndex = pageState.findIndex(p => p.id === draggedPageId);
         const toIndex = pageState.findIndex(p => p.id === targetId);
 
-        // Reorder
-        const item = pageState.splice(fromIndex, 1)[0];
-        pageState.splice(toIndex, 0, item);
-        
-        renderPages();
+        if (fromIndex !== -1 && toIndex !== -1) {
+            const item = pageState.splice(fromIndex, 1)[0];
+            pageState.splice(toIndex, 0, item);
+            renderPages();
+        }
     }
+    
+    this.classList.remove('border-blue-500', 'border-dashed');
     return false;
 }
 
-function handleDragEnd() {
+function handleDragEnd(e) {
     this.classList.remove('dragging');
     document.querySelectorAll('.page-card').forEach(card => {
         card.classList.remove('border-blue-500', 'border-dashed');
     });
+    draggedPageId = null;
 }
 
 // --- Page Range Parsing ---
 
 function parsePageRange(input) {
-    // Reset all selections first
     pageState.forEach(p => p.selected = false);
     
     if (!input.trim()) {
@@ -365,15 +379,15 @@ function parsePageRange(input) {
         const trimmed = part.trim();
         if (trimmed.includes('-')) {
             const [start, end] = trimmed.split('-').map(n => parseInt(n.trim()));
-            if (!isNaN(start) && !isNaN(end)) {
+            if (!isNaN(start) && !isNaN(end) && start <= end) {
                 for (let i = start; i <= end; i++) {
-                    if (i >= 1 && i <= pageState.length) pages.add(i - 1); // Convert to 0-based
+                    if (i >= 1 && i <= pageState.length) pages.add(i - 1);
                 }
             }
         } else {
             const num = parseInt(trimmed);
             if (!isNaN(num) && num >= 1 && num <= pageState.length) {
-                pages.add(num - 1); // Convert to 0-based
+                pages.add(num - 1);
             }
         }
     }
@@ -391,12 +405,10 @@ function updateSelectionUI() {
     selectedCountEl.textContent = selectedCount;
     downloadSelectedBtn.disabled = selectedCount === 0;
     
-    // Update input to reflect current selection if it was clicked
     const selectedIndices = pageState
         .map((p, idx) => p.selected ? idx + 1 : null)
         .filter(n => n !== null);
     
-    // Only update input if user isn't currently typing (simple heuristic)
     if (document.activeElement !== pageRangeInput) {
         pageRangeInput.value = selectedIndices.join(', ');
     }
@@ -417,7 +429,6 @@ async function savePdf(pageIndices, filename = null) {
         for (const pageIndex of pageIndices) {
             const [copiedPage] = await newPdf.copyPages(pdfDoc, [pageIndex]);
             
-            // Apply rotation from pageState
             const state = pageState.find(p => p.pageIndex === pageIndex);
             if (state && state.rotation !== 0) {
                 const originalRotation = copiedPage.getRotation().angle;
@@ -433,7 +444,7 @@ async function savePdf(pageIndices, filename = null) {
         
         const link = document.createElement('a');
         link.href = url;
-        link.download = filename || `edited-${currentFile.name}`;
+        link.download = filename || (currentFile ? `edited-${currentFile.name}` : 'edited.pdf');
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
