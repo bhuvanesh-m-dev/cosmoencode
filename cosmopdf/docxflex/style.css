@@ -149,6 +149,11 @@ body {
     }
 }
 
+/* Progress Bar */
+#progress-bar {
+    transition: width 0.3s ease;
+}
+
 /* Checkbox styling */
 input[type="checkbox"] {
     appearance: none;
